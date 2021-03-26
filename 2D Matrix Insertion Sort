@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+int main()
+{
+    //var rows columns
+    int rows = 4;
+    int cols = 4;
+    int x[rows][cols];
+    
+    for(int r=0; r<rows; r++){
+        for(int c=0; c<cols; c++){
+            x[r][c]=rand()%25;
+        }
+    }
+    
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            cout<<x[i][j]<<' ';
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+    
+    int i, j, k;
+    int min = x[0][0];
+    for(int r=0; r<rows; r++){
+        for(int c=0; c<cols; c++){
+            if(x[r][c]<min)
+                min = x[r][c];
+        }
+    }
+    
+    for (i = 0; i < rows; i++) {
+        for (j = 1; j < rows*cols; j++) {
+            int temp = x[i][j];
+            for (k = j; k>=1 && temp>=min && x[i][k-1]>temp; k--) {
+                // just switch the values
+                x[i][k] = x[i][k-1];
+            }
+            x[i][k] = temp;
+            if(temp<min)
+                break;
+        }
+    }
+    
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            cout<<x[i][j]<<' ';
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+    return 0;
+}
