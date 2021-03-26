@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+    int Arr[] = {5,4,3,2,1};
+    int Arr_length = sizeof(Arr)/sizeof(Arr[0]);
+    int tmp_index;
+    
+    for(int i=0; i < Arr_length-1; i++){
+        tmp_index = 1;
+        for(int j=i; j < Arr_length; j++){
+            if(Arr[j] < Arr[tmp_index])
+                tmp_index = j;
+        }
+        int tmp_value = Arr[tmp_index];
+        Arr[tmp_index] = Arr[i];
+        Arr[i] = tmp_value;
+    }
+    for(int k=0; k<Arr_length; k++)
+    cout << Arr[k] << " ";
+}
+
+//2d array implement start
+int Arr[][];
+int Arr_length = sizeof(Arr)/sizeof(Arr[0])
+    for(int i=0; i < Arr_length-1; i++){
+       for(int j=i; j < Arr_length; j++){
+           int Arr[i][j]
