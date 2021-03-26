@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+int numsolns, lengthcipher,bettersolns;
+vector <decipher>(ciphertxt[]){
+    vector<string> solutions;
+    for(a=0; a<numsolns; a++ ){
+        string solution;
+        for(b=0; b<lengthcipher; b++){
+            solution += ciphertxt[a][b];
+            solutions.push_back(solution);
+        }
+    }
+}//now we have numRandomSolutions
+
+int threshold;
+//collects the solutions to pass a certain thresholds
+int wordFilterfeaturefunct(plaintxt[]){
+    
+}
+
+
+vector <string> betterSolutions
+    for(d=0; d<bettersolns.size();d++){
+        if wordFilterfeaturefunct(solutions[d])>threshold;
+        betterSolutions.push_back(solutions[d]);
+    }
+int main(){
+    string ciphertxt[32] = {"KSMEHZBBLKSMEMPOGAJXSEJFLZSYKEN"};
+    string type array;
+    string key[32] = {"RELATIONSRELATIONSRELATIONSRELBES"};
+    string type array;
+    string plaintxt[32] = {"TOBEORNOTTOBEISTHEQUESTIONJAV"};
+    
+}
