@@ -1,0 +1,104 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+int main(){}
+    
+struct SNode{
+    time_t start;
+    time_t end;
+    double duration;
+    struct SNode *prev,
+                 *next;
+};
+
+
+struct SNode *sHead= nullptr, *sTail= nullptr;
+
+bool insertJob(time_t start, time_t end, double duration){
+    bool fail = false;
+    struct SNode *temp = (struct SNode *)malloc(sizeof(struct SNode)),
+                 *traveller;
+    
+    if(temp !=nullptr){
+      temp->start= start;
+      temp->end = end;
+      temp->duration = duration;
+      temp->prev= nullptr;
+      temp->next = nullptr;
+      if(sHead == nullptr){  //insert into empty list
+        sHead=temp;
+        sTail=temp;
+      }else{ 
+        while(traveller != nullptr && (temp->start >traveller->end)){
+          traveller = traveller->next;
+        }
+        if(traveller == nullptr){
+          sTail->next=temp;
+          temp->prev = sTail;
+          sTail=temp;
+        }else{ 
+          temp->prev=traveller->prev;
+          temp->next =  traveller;
+          traveller->prev =temp;
+        }
+      }
+    }else{
+      fail = true;
+    }
+    return fail;
+}
+
+bool removeJob(struct JNode *target){
+    bool fail =false;
+    if(target == nullptr){
+      fail= true;
+    }else{
+        if(target ==jHead){
+          jHead =jHead->next;
+          if(jHead !=nullptr){
+            jHead->prev = nullptr;
+          }else{
+            jTail=nullptr;
+          }
+        }else if(target ==jTail){
+          jTail=jTail->prev;
+          jTail->next=nullptr;
+        }else{
+          target->prev->next = target->next;
+          target->next->prev=target->prev;
+        }
+        free(target);
+    }
+    return fail;
+}
+
+
+
+void pairJobWorker(int offset){
+  struct JNode *jTraveller= wHead;
+  struct WNode *wTraveller= jHead;
+  unsigned tJob;
+  
+  while (offset>0 && jTraveller !=nullptr){
+    tJob=jTraveller->jobNum;
+    removeJob(jTraveller);
+    insertJob(tJob);
+  }
+
+  
+  while(jTraveller !=nullptr  && wTraveller !=nullptr){
+    cout  <<"Job "<<jTraveller->jobNum << " with "<< wTraveller->name<<endl;
+    jTraveller= jTraveller->next;
+    wTraveller = wTraveller->next;
+  }
+
+  while(jTraveller != nullptr){
+    cout << "unassigned job " << jTraveller->jobNum <<endl;
+  }
+
+  while(wTraveller != nullptr){
+    cout << "unassigned worker " << wTraveller->name <<endl;
+  }
+
+}
