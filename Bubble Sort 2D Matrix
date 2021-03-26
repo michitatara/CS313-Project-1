@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    
+    //var rows columns
+    int rows = rand()%20;
+    int cols = rand()%20;
+    
+    //array of matrices
+    int x[rows][cols];
+    //length of array
+    int length = 0;
+    
+    //Unsorted
+    for(int i=0; i<rows; i++){
+        for(int j=0; j<cols; j++){
+            x[i][j] = rand()%20;
+            cout<<x[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+    
+    //test for loop to print initial arrays
+    for (int k = 0; k < cols*rows; k++){
+       for (int i = 0; i < rows; i++){
+          for (int j = 0; j < cols; j++){
+              if (j < cols - 1){
+                  if (x[i][j] > x[i][j+1]){
+                      int temp = x[i][j];
+                      x[i][j] = x[i][j+1];
+                      x[i][j+1] = temp; 
+                   }
+               } 
+               //if 
+               else {
+                   if (x[i][j] > x[i+1][0] and i < rows - 1) {
+                      int temp = x[i][j];
+                      x[i][j] = x[i+1][0];
+                      x[i+1][0] = temp;
+                    }
+                }
+            }
+        }
+    }
+    
+    //Sorted
+    for(int i=0; i<rows; i++){
+        for(int j=0; j<cols; j++){
+            cout<<x[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+}
