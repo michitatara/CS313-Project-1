@@ -1,0 +1,116 @@
+#include <iostream>
+using namespace std;
+
+
+
+    struct JNode {
+        unsigned jobNum;
+        struct JNode* prev,* next;
+    };
+
+    struct WNode {
+        string name;
+        struct WNode* prev, * next;//switched JNode* to WNode*
+    }; 
+    struct JNode* jHead = nullptr, * jTail = nullptr;
+    struct WNode* wHead = nullptr; //made WNode
+    bool insertJob(unsigned num) {
+        bool fail = false;
+        struct JNode* temp = (struct JNode*)malloc(sizeof(struct JNode*));//changed the JNode to a ptr so it isn't incomplete
+
+        if (temp != nullptr) {
+            temp->jobNum = num;
+            temp->prev = nullptr;
+            temp->next = nullptr;
+            if (jHead == nullptr) {  //insert into empty list
+                jHead = temp;
+                jTail = temp;
+            }
+            else {  //insert at end of list
+                temp->prev = jTail;
+                jTail->next = temp;
+                jTail = temp;
+            }
+        }
+        else {
+            fail = true;
+        }
+        return fail;
+    }
+
+    bool removeJob(struct JNode* target) {
+        bool fail = false;
+
+
+        if (target == nullptr) {
+            fail = true;
+        }
+        else {
+            if (target == jHead) {
+                jHead = jHead->next;
+                if (jHead != nullptr) {
+                    jHead->prev = nullptr;
+                }
+                else {
+                    jTail = nullptr;
+                }
+            }
+            else if (target == jTail) {
+                jTail = jTail->prev;
+                jTail->next = nullptr;
+            }
+            else {
+                target->prev->next = target->next;
+                target->next->prev = target->prev;
+            }
+            free(target);
+        }
+        return fail;
+    }
+
+    struct JNode* findJob(unsigned num) {
+        struct JNode* temp = nullptr; //make temp equal to nullptr and Jnode to JNode
+        struct JNode* traveller = jHead;//made Jnode to JNode
+
+        while (traveller != nullptr && traveller->jobNum != num) {
+            traveller = traveller->next;
+        }
+        if (traveller != nullptr) {
+            temp = traveller;
+        }
+
+        return temp;
+    }
+
+
+    void pairJobWorker(int offset) {
+        struct WNode* wTraveller = wHead;
+        struct JNode* jTraveller = jHead;//switched WNode and JNode to get the correct structure
+        unsigned tJob;
+
+        while (offset > 0 && jTraveller != nullptr) {
+            tJob = jTraveller->jobNum;
+            removeJob(jTraveller);
+            insertJob(tJob);
+        }
+
+
+        while (jTraveller != nullptr && wTraveller != nullptr) {
+            cout << "Job " << jTraveller->jobNum << " with " << wTraveller->name << endl;
+            jTraveller = jTraveller->next;
+            wTraveller = wTraveller->next;
+        }
+
+        while (jTraveller != nullptr) {
+            cout << "unassigned job " << jTraveller->jobNum << endl;
+        }
+
+        while (wTraveller != nullptr) {
+            cout << "unassigned worker " << wTraveller->name << endl;
+        }
+    }
+    int main() {
+        int number = 25;//
+        JNode* job = findJob(number);
+        pairJobWorker(number);
+    }
